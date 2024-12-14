@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Lung Cancer Detection System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-content {
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+        color: var(--light-gray);
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--medium-gray);
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: var(--dark-gray);
+        color: var(--accent-gray);
+        padding: 0.8rem 1.5rem;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .cta-button:hover {
+        background: var(--darker-gray);
+        transform: translateY(-2px);
+        border-color: var(--medium-gray);
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--dark-gray);
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        background: var(--darker-gray);
+        transform: translateY(-5px);
+    }
+
+    .feature-card h3 {
+        color: var(--light-gray);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .feature-card p {
+        color: var(--medium-gray);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero-content">
+    <h1 class="hero-title">Welcome to the Lung Cancer Detection System</h1>
+    <p class="hero-subtitle">AI-powered histopathological analysis for early and accurate lung cancer diagnosis.</p>
+    <a href="/diagnostic" class="cta-button">Try the Diagnostic Tool</a>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <h3>High Accuracy</h3>
+        <p>Our CNN model achieves 94.85% classification accuracy, ensuring reliable results.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Fast Results</h3>
+        <p>Get diagnostic predictions in seconds, enabling faster decision-making.</p>
+    </div>
+    <div class="feature-card">
+        <h3>User-Friendly</h3>
+        <p>Our intuitive interface simplifies the process of uploading and analyzing images.</p>
+    </div>
+</div>
+{% endblock %}

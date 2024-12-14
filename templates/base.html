@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lung Cancer Detection System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Menu Button -->
+    <div class="menu-btn">
+        <div class="bar"></div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay">
+        <ul class="nav-links">
+            <li><a href="/" data-page="home">Home</a></li>
+            <li><a href="/diagnostic" data-page="diagnostic">Diagnostic Tool</a></li>
+            <li><a href="/about" data-page="about">About</a></li>
+            <li><a href="/technical" data-page="technical">Technical Details</a></li>
+            <li><a href="/research" data-page="research">Research Impact</a></li>
+        </ul>
+    </div>
+
+    <!-- Page Transition Element -->
+    <div class="page-transition"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" style="background-image: url('{{ background_image }}');">
+        <div class="content-container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Lung Cancer Detection System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.menu-btn');
+            const navOverlay = document.querySelector('.nav-overlay');
+            const pageTransition = document.querySelector('.page-transition');
+            const links = document.querySelectorAll('.nav-links a');
+
+            // Menu Toggle
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+            });
+
+            // Page Transitions
+            links.forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const target = e.target.href;
+
+                    // Start transition animation
+                    pageTransition.style.transform = 'scaleY(1)';
+                    
+                    // Close menu
+                    menuBtn.classList.remove('active');
+                    navOverlay.classList.remove('active');
+
+                    // Wait for animation
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Navigate to new page
+                    window.location.href = target;
+                });
+            });
+
+            // Handle back button and initial page load
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    pageTransition.style.transform = 'scaleY(0)';
+                }
+            });
+
+            // Add stagger effect to menu items
+            links.forEach((link, index) => {
+                link.parentElement.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Research Impact - Lung Cancer Detection System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .research-section {
+        margin-bottom: 2rem;
+        background: var(--dark-gray);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .research-section h2 {
+        color: var(--light-gray);
+        margin-bottom: 1.5rem;
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 2px solid var(--medium-gray);
+        padding-bottom: 0.5rem;
+    }
+
+    .research-section p {
+        margin-bottom: 1rem;
+        line-height: 1.8;
+        color: var(--medium-gray);
+    }
+
+    .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .impact-card {
+        background: var(--darker-gray);
+        border: 1px solid var(--glass-border);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px var(--shadow);
+    }
+
+    .impact-card h3 {
+        color: var(--accent-gray);
+        margin-bottom: 1rem;
+    }
+
+    .future-list {
+        background: var(--darker-gray);
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+    }
+
+    .future-list li {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        position: relative;
+        color: var(--medium-gray);
+    }
+
+    .future-list li:before {
+        content: "•";
+        color: var(--accent-gray);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="research-section">
+    <h2>Background & Significance</h2>
+    <p>Lung cancer diagnosis relies heavily on manual interpretation of histopathological images, which is time-intensive and subject to variability among pathologists. This project seeks to address these challenges by combining advanced AI methods with practical applications to enhance diagnostic accuracy and efficiency.</p>
+    
+    <div class="impact-grid">
+        <div class="impact-card">
+            <h3>Clinical Impact</h3>
+            <p>Providing a faster, consistent diagnostic tool supports pathologists and expedites treatment decisions, potentially improving patient outcomes.</p>
+        </div>
+        <div class="impact-card">
+            <h3>Research Applications</h3>
+            <p>The system facilitates analysis of large histopathological datasets, contributing to research in cancer detection and treatment development.</p>
+        </div>
+        <div class="impact-card">
+            <h3>Educational Value</h3>
+            <p>The tool offers medical students an accessible platform to explore histopathological patterns, enhancing their diagnostic training.</p>
+        </div>
+    </div>
+</div>
+
+<div class="research-section">
+    <h2>Challenges in Diagnosis</h2>
+    <p>Traditional diagnostic methods face several issues:</p>
+    <ul class="future-list">
+        <li>Labor-intensive processes prone to variability</li>
+        <li>Limited availability of expert pathologists</li>
+        <li>Increased workload with growing case volumes</li>
+    </ul>
+</div>
+
+<div class="research-section">
+    <h2>Future Directions</h2>
+    <p>To expand the utility of this tool, we plan to:</p>
+    <ul class="future-list">
+        <li>Integrate additional cancer types and diagnostic tasks</li>
+        <li>Implement explainable AI features for better interpretability</li>
+        <li>Transition the application to cloud-based platforms for scalability</li>
+        <li>Collaborate with medical institutions for clinical validation</li>
+    </ul>
+</div>
+{% endblock %}

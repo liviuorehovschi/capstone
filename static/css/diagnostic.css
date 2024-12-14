@@ -1,0 +1,217 @@
+/* Loading Animation */
+.loading-container {
+    display: none;
+    text-align: center;
+    margin: 1rem 0;
+    color: var(--light-gray);
+}
+
+.scanner {
+    width: 180px;
+    height: 3px;
+    background: var(--dark-gray);
+    position: relative;
+    overflow: hidden;
+    margin: 12px auto;
+    border-radius: 2px;
+}
+
+.scanner::after {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--medium-gray),
+        transparent
+    );
+    animation: scanning 1.5s linear infinite;
+}
+
+@keyframes scanning {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(350%); }
+}
+
+/* Results Styling */
+.result-card {
+    background: var(--dark-gray);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--light-gray);
+}
+
+.confidence-container {
+    background: var(--darker-gray);
+    padding: 0.8rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+.help-icon {
+    color: var(--light-gray);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--dark-gray);
+}
+
+.help-icon:hover {
+    color: var(--accent-gray);
+}
+
+/* Upload Box styling */
+.upload-box {
+    border: 1px solid var(--glass-border);
+    padding: 1.2rem;
+    border-radius: 8px;
+    background: var(--dark-gray);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+    position: relative;
+    text-align: center;
+}
+
+.upload-box:hover {
+    background: var(--darker-gray);
+}
+
+.upload-box input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-box label {
+    color: var(--light-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.6rem 1.2rem;
+    background: var(--darker-gray);
+    border-radius: 5px;
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.upload-box:hover label {
+    background: var(--dark-gray);
+    border-color: var(--medium-gray);
+}
+
+/* Image Preview styling */
+.image-preview {
+    max-width: 250px;
+    margin: 1rem auto;
+    background: var(--darker-gray);
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+}
+
+/* Button styling */
+.button {
+    background: var(--dark-gray);
+    color: var(--accent-gray);
+    border: 1px solid var(--glass-border);
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.button:hover {
+    background: var(--darker-gray);
+    transform: translateY(-2px);
+}
+
+/* Diagnosis colors */
+.diagnosis-normal {
+    color: var(--light-gray);
+}
+
+.diagnosis-cancer {
+    color: var(--accent-gray);
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    display: none;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-gray);
+    color: var(--light-gray);
+    padding: 0.8rem;
+    border-radius: 5px;
+    width: 250px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 0.9rem;
+}
+
+.help-icon:hover + .tooltip-text {
+    display: block;
+}
+
+/* Container adjustments */
+.diagnostic-container {
+    padding: 0.5rem;
+}
+
+.diagnostic-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.diagnostic-container p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}

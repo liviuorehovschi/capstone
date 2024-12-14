@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}About - Lung Cancer Detection System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-section {
+        margin-bottom: 2rem;
+        background: var(--dark-gray);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .about-section h2 {
+        color: var(--light-gray);
+        margin-bottom: 1.5rem;
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 2px solid var(--medium-gray);
+        padding-bottom: 0.5rem;
+    }
+
+    .about-section p {
+        margin-bottom: 1rem;
+        line-height: 1.8;
+        color: var(--medium-gray);
+    }
+
+    .about-section ul {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+        color: var(--medium-gray);
+    }
+
+    .timeline {
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    .timeline-item {
+        padding: 1.5rem;
+        border-left: 3px solid var(--medium-gray);
+        margin-left: 1rem;
+        margin-bottom: 1.5rem;
+        background: var(--dark-gray);
+        border-radius: 0 5px 5px 0;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover {
+        transform: translateX(10px);
+        background: var(--darker-gray);
+    }
+
+    .timeline-date {
+        font-weight: bold;
+        color: var(--accent-gray);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-section">
+    <h2>Project Motivation</h2>
+    <p>Lung cancer remains a leading cause of cancer-related mortality worldwide. Early detection of lung adenocarcinoma and squamous cell carcinoma is crucial for improving patient outcomes. However, traditional diagnostic methods are time-intensive and subject to variability between pathologists.</p>
+    <p>This project aims to leverage advanced AI techniques, specifically Convolutional Neural Networks (CNNs), to assist pathologists by improving the speed, consistency, and accuracy of histopathological image analysis.</p>
+</div>
+
+<div class="about-section">
+    <h2>Project Goals</h2>
+    <p>The goals of this project include:</p>
+    <ul>
+        <li>Developing a CNN model capable of classifying lung tissue images into benign, adenocarcinoma, and squamous cell carcinoma categories.</li>
+        <li>Building a user-friendly web application to integrate the model into a practical diagnostic tool.</li>
+        <li>Addressing dataset limitations through robust data augmentation techniques.</li>
+        <li>Providing a scalable framework for future diagnostic applications in medical imaging.</li>
+    </ul>
+</div>
+
+<div class="about-section">
+    <h2>Development Journey</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-date">Phase 1: Research</div>
+            <p>Conducted a literature review and gathered insights into the challenges of histopathological analysis.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">Phase 2: Data Preparation</div>
+            <p>Processed the LC25000 dataset, including data augmentation, to ensure robust training and validation.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">Phase 3: Model Development</div>
+            <p>Designed and trained the EfficientNet-B0 model with techniques like transfer learning and dropout regularization.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">Phase 4: Web Application</div>
+            <p>Integrated the trained CNN model into a fully functional web application for real-time image classification.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

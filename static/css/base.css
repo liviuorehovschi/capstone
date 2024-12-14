@@ -1,0 +1,207 @@
+:root {
+    --deep-blue: #1a1f2e;         /* Very dark blue background */
+    --darker-gray: #161923;       /* Almost black */
+    --dark-gray: #1e2330;         /* Dark gray for containers */
+    --medium-gray: #8892b0;       /* For primary text */
+    --light-gray: #a8b2d1;        /* For headings */
+    --accent-gray: #ccd6f6;       /* For important text/highlights */
+    --glass-bg: rgba(26, 31, 46, 0.92);    /* Darker, more opaque background */
+    --glass-border: rgba(255, 255, 255, 0.08);  /* More subtle border */
+    --shadow: rgba(0, 0, 0, 0.25);  /* Consistent shadow color */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    color: var(--medium-gray);
+    background: var(--deep-blue);
+}
+
+h1, h2, h3 {
+    color: var(--light-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+}
+
+p {
+    color: var(--medium-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+/* Menu Button Styles */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--darker-gray);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.menu-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--medium-gray);
+}
+
+.menu-btn .bar {
+    width: 25px;
+    height: 2px;
+    background: var(--accent-gray);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-btn .bar::before,
+.menu-btn .bar::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background: var(--accent-gray);
+    transition: all 0.3s ease;
+}
+
+.menu-btn .bar::before {
+    transform: translateY(-8px);
+}
+
+.menu-btn .bar::after {
+    transform: translateY(8px);
+}
+
+.menu-btn.active .bar {
+    background: transparent;
+}
+
+.menu-btn.active .bar::before {
+    transform: rotate(45deg);
+}
+
+.menu-btn.active .bar::after {
+    transform: rotate(-45deg);
+}
+
+/* Navigation Menu Styles */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 25, 35, 0.98);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    backdrop-filter: blur(8px);
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-links {
+    list-style: none;
+    text-align: center;
+}
+
+.nav-links li {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+}
+
+.nav-overlay.active .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nav-links a {
+    color: var(--accent-gray);
+    text-decoration: none;
+    font-size: 2rem;
+    display: block;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--light-gray);
+    transform: translateX(10px);
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 80px 20px 20px;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(22, 25, 35, 0.92),
+        rgba(26, 31, 46, 0.95)
+    );
+    z-index: 1;
+}
+
+.content-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px var(--shadow);
+    backdrop-filter: blur(12px);
+}
+
+/* Footer */
+footer {
+    background: var(--darker-gray);
+    color: var(--medium-gray);
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    z-index: 3;
+    border-top: 1px solid var(--glass-border);
+}
