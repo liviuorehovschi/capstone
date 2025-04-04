@@ -215,3 +215,77 @@
     margin-bottom: 0.5rem;
     line-height: 1.5;
 }
+
+/* Preview Trio Layout */
+.preview-trio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 1rem;
+}
+
+.side-preview,
+.center-preview {
+    width: 224px;
+    height: 224px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background-color: var(--dark-gray);
+}
+
+/* Map Buttons Row */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 0.8rem;
+}
+
+.small-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--accent-gray);
+    background: var(--dark-gray);
+    border: 1px solid var(--glass-border);
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.small-button:hover {
+    background: var(--darker-gray);
+    transform: translateY(-2px);
+}
+/* Surround all three previews */
+.preview-wrapper {
+    max-width: 800px;
+    margin: 1.5rem auto;
+    background: var(--darker-gray);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Align three images in a row */
+.preview-trio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+/* All previews uniform */
+.side-preview,
+.center-preview {
+    width: 224px;
+    height: 224px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background-color: var(--dark-gray);
+}
