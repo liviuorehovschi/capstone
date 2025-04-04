@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}About - Lung Cancer Detection System{% endblock %}
+{% block title %}About - Lung Histopathology AI Classifier{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -69,18 +69,19 @@
 {% block content %}
 <div class="about-section">
     <h2>Project Motivation</h2>
-    <p>Lung cancer remains a leading cause of cancer-related mortality worldwide. Early detection of lung adenocarcinoma and squamous cell carcinoma is crucial for improving patient outcomes. However, traditional diagnostic methods are time-intensive and subject to variability between pathologists.</p>
-    <p>This project aims to leverage advanced AI techniques, specifically Convolutional Neural Networks (CNNs), to assist pathologists by improving the speed, consistency, and accuracy of histopathological image analysis.</p>
+    <p>Lung cancer is one of the deadliest cancers worldwide, and timely, accurate diagnosis is critical. This project explores the use of artificial intelligence in histopathological image classification to support clinical decision-making and improve outcomes. By leveraging deep learning, we aim to assist pathologists in detecting lung cancer subtypes more consistently and efficiently.</p>
+    <p>The project began with a convolutional neural network model trained to detect lung nodules from chest X-ray images. However, to improve resolution, detail, and diagnostic relevance, the focus pivoted toward histopathology. This led to the integration of LC25000 and LungHist7000 datasets for model training on real stained lung tissue slides.</p>
 </div>
 
 <div class="about-section">
     <h2>Project Goals</h2>
-    <p>The goals of this project include:</p>
+    <p>This web-based diagnostic prototype was developed with the following objectives:</p>
     <ul>
-        <li>Developing a CNN model capable of classifying lung tissue images into benign, adenocarcinoma, and squamous cell carcinoma categories.</li>
-        <li>Building a user-friendly web application to integrate the model into a practical diagnostic tool.</li>
-        <li>Addressing dataset limitations through robust data augmentation techniques.</li>
-        <li>Providing a scalable framework for future diagnostic applications in medical imaging.</li>
+        <li>Train an EfficientNet-B0-based CNN capable of identifying benign lung tissue, adenocarcinoma, and squamous cell carcinoma.</li>
+        <li>Augment limited datasets using controlled transformations to prevent overfitting.</li>
+        <li>Deliver real-time image classification via a clean, interactive web interface.</li>
+        <li>Enhance model explainability with integrated saliency maps and Grad-CAM overlays.</li>
+        <li>Lay a foundation for scalable clinical tools that prioritize both performance and transparency.</li>
     </ul>
 </div>
 
@@ -88,21 +89,34 @@
     <h2>Development Journey</h2>
     <div class="timeline">
         <div class="timeline-item">
-            <div class="timeline-date">Phase 1: Research</div>
-            <p>Conducted a literature review and gathered insights into the challenges of histopathological analysis.</p>
+            <div class="timeline-date">Initial Concept</div>
+            <p>Started as a chest X-ray lung cancer detection model using a small dataset of annotated radiographs.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-date">Phase 2: Data Preparation</div>
-            <p>Processed the LC25000 dataset, including data augmentation, to ensure robust training and validation.</p>
+            <div class="timeline-date">Pivot to Histopathology</div>
+            <p>Recognized the clinical limitations of X-ray and transitioned to histological slide classification using LC25000.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-date">Phase 3: Model Development</div>
-            <p>Designed and trained the EfficientNet-B0 model with techniques like transfer learning and dropout regularization.</p>
+            <div class="timeline-date">Dataset Expansion</div>
+            <p>Incorporated real clinical slides from LungHist7000 to strengthen model generalization and real-world relevance.</p>
         </div>
         <div class="timeline-item">
-            <div class="timeline-date">Phase 4: Web Application</div>
-            <p>Integrated the trained CNN model into a fully functional web application for real-time image classification.</p>
+            <div class="timeline-date">Model Engineering</div>
+            <p>Used EfficientNet-B0 as the backbone. Applied preprocessing, data augmentation, and fine-tuning for optimal accuracy.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">Web App Integration</div>
+            <p>Developed a user-friendly Flask interface with diagnostic feedback, saliency visualization, and Grad-CAM support.</p>
         </div>
     </div>
+</div>
+
+<div class="about-section">
+    <h2>Author & Links</h2>
+    <p>This project was developed by Liviu Orehovschi as part of an academic exploration in machine learning and medical image processing. It combines research, development, and user-centered design into a functional demo of how AI can enhance cancer diagnostics.</p>
+    <p>
+        <strong>GitHub:</strong> <a href="https://github.com/liviuorehovschi" target="_blank">github.com/liviuorehovschi</a><br>
+        <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/liviuorehovschi" target="_blank">linkedin.com/in/liviuorehovschi</a>
+    </p>
 </div>
 {% endblock %}

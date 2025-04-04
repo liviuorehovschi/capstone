@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome - Lung Cancer Detection System{% endblock %}
+{% block title %}Welcome - Lung Histopathology AI Classifier{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -82,23 +82,23 @@
 
 {% block content %}
 <div class="hero-content">
-    <h1 class="hero-title">Welcome to the Lung Cancer Detection System</h1>
-    <p class="hero-subtitle">AI-powered histopathological analysis for early and accurate lung cancer diagnosis.</p>
+    <h1 class="hero-title">Histomancer: Liviu’s AI-Powered Slide Sorcery</h1>
+    <p class="hero-subtitle">A research prototype for real-time lung cancer subtype prediction using deep learning and histology slides.</p>
     <a href="/diagnostic" class="cta-button">Try the Diagnostic Tool</a>
 </div>
 
 <div class="features">
     <div class="feature-card">
-        <h3>High Accuracy</h3>
-        <p>Our CNN model achieves 94.85% classification accuracy, ensuring reliable results.</p>
+        <h3>Robust Classification</h3>
+        <p>Trained on a combined dataset of real and augmented histopathology images, our EfficientNetB0-based model distinguishes between adenocarcinoma, squamous cell carcinoma, and benign tissue with over 98% test accuracy.</p>
     </div>
     <div class="feature-card">
-        <h3>Fast Results</h3>
-        <p>Get diagnostic predictions in seconds, enabling faster decision-making.</p>
+        <h3>Real-Time Analysis</h3>
+        <p>Upload histological images and receive AI-generated classifications instantly via our lightweight, browser-accessible web app.</p>
     </div>
     <div class="feature-card">
-        <h3>User-Friendly</h3>
-        <p>Our intuitive interface simplifies the process of uploading and analyzing images.</p>
+        <h3>Explainability Features</h3>
+        <p>Saliency maps and Grad-CAM overlays reveal which regions of the image influence the AI's decisions, enhancing transparency and interpretability for researchers and medical professionals.</p>
     </div>
 </div>
 {% endblock %}

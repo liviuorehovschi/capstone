@@ -75,43 +75,47 @@
 
 {% block content %}
 <div class="research-section">
-    <h2>Background & Significance</h2>
-    <p>Lung cancer diagnosis relies heavily on manual interpretation of histopathological images, which is time-intensive and subject to variability among pathologists. This project seeks to address these challenges by combining advanced AI methods with practical applications to enhance diagnostic accuracy and efficiency.</p>
-    
+    <h2>Research Context</h2>
+    <p>This project began with a broad interest in applying artificial intelligence to medical imaging, initially focusing on pulmonary nodules and chest X-rays. However, due to limited dataset diversity, resolution challenges, and poor generalization, the approach pivoted toward histopathological images. These offered better class separability and a closer connection to pathological practice. With this shift came the integration of real biopsy images—first synthetic from LC25000, and later real, variably stained samples from the LungHist700 dataset—leading to more practical, clinically relevant AI modeling.</p>
+</div>
+
+<div class="research-section">
+    <h2>Impact Areas</h2>
     <div class="impact-grid">
         <div class="impact-card">
-            <h3>Clinical Impact</h3>
-            <p>Providing a faster, consistent diagnostic tool supports pathologists and expedites treatment decisions, potentially improving patient outcomes.</p>
+            <h3>Diagnostic Support</h3>
+            <p>By classifying lung tissue images into benign, adenocarcinoma, or squamous cell carcinoma, the tool supports rapid, preliminary screening. This can be particularly valuable in settings where immediate specialist review is unavailable or overburdened.</p>
         </div>
         <div class="impact-card">
-            <h3>Research Applications</h3>
-            <p>The system facilitates analysis of large histopathological datasets, contributing to research in cancer detection and treatment development.</p>
+            <h3>Educational Utility</h3>
+            <p>For students and junior practitioners, the tool offers a visual interface for exploring histopathological differences between major lung cancer types. The saliency and Grad-CAM overlays add interpretability, offering a bridge between machine learning outputs and histological intuition.</p>
         </div>
         <div class="impact-card">
-            <h3>Educational Value</h3>
-            <p>The tool offers medical students an accessible platform to explore histopathological patterns, enhancing their diagnostic training.</p>
+            <h3>Research Integration</h3>
+            <p>The system offers a blueprint for reproducible experimentation on histopathological image classification. It demonstrates a working pipeline using mixed datasets, basic augmentation, and explainability integration, all within a deployable web interface.</p>
         </div>
     </div>
 </div>
 
 <div class="research-section">
-    <h2>Challenges in Diagnosis</h2>
-    <p>Traditional diagnostic methods face several issues:</p>
+    <h2>Challenges and Limitations</h2>
     <ul class="future-list">
-        <li>Labor-intensive processes prone to variability</li>
-        <li>Limited availability of expert pathologists</li>
-        <li>Increased workload with growing case volumes</li>
+        <li><strong>Generalization:</strong> Models trained on LC25000 alone were brittle when evaluated on external real-world samples. This highlighted the limitations of synthetic or augmented datasets, and led to the inclusion of real lung biopsy images.</li>
+        <li><strong>Data heterogeneity:</strong> The LungHist700 images introduced wide variance in tissue preparation, staining, and resolution. While this improved realism, it also posed challenges for consistent preprocessing and model performance.</li>
+        <li><strong>Model drift:</strong> When training on augmented subsets, the model initially overfit to patterns specific to training batches. Stratified validation splits and dropout layers helped mitigate this, but performance fluctuations remain an issue on smaller validation sets.</li>
+        <li><strong>Label uncertainty:</strong> Some real samples from LungHist700 had weak or noisy labels. Manual verification was used for a subset, but future work should include larger, curated datasets to minimize training noise.</li>
     </ul>
 </div>
 
 <div class="research-section">
-    <h2>Future Directions</h2>
-    <p>To expand the utility of this tool, we plan to:</p>
+    <h2>Future Research Directions</h2>
+    <p>The tool currently performs well on balanced, clean test sets but requires more robust validation and extension to become reliable in real clinical environments. Future research will focus on:</p>
     <ul class="future-list">
-        <li>Integrate additional cancer types and diagnostic tasks</li>
-        <li>Implement explainable AI features for better interpretability</li>
-        <li>Transition the application to cloud-based platforms for scalability</li>
-        <li>Collaborate with medical institutions for clinical validation</li>
+        <li>Acquiring or generating larger, more diverse histopathology datasets with consistent annotations across institutions and scanners.</li>
+        <li>Incorporating multi-class and hierarchical classification to handle additional lung pathologies and subtypes.</li>
+        <li>Testing model performance on low-quality or edge-case slides to improve robustness and reduce false confidence.</li>
+        <li>Benchmarking the current architecture against more recent vision transformers or hybrid CNN-Transformer models.</li>
+        <li>Conducting user studies with pathologists to evaluate practical utility and collect feedback for refinement.</li>
     </ul>
 </div>
 {% endblock %}
