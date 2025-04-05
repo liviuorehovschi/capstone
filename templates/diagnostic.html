@@ -17,7 +17,6 @@
             <label for="fileInput">Select histopathological image</label>
         </div>
 
-        <!-- Wrapped all previews inside one shared box -->
         <div id="imagePreview" class="preview-wrapper" style="display: none;">
             <div class="preview-trio">
                 <img id="saliencyPreview" class="side-preview" alt="Saliency Map" style="display: none;">
@@ -46,6 +45,89 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/diagnostic.js') }}"></script>
 <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const resultBox = document.getElementById('result');
+    const loadingContainer = document.getElementById('loadingContainer');
+
+    uploadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('fileInput');
+        if (!fileInput.files.length) {
+            resultBox.textContent = "Please select an image.";
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        loadingContainer.style.display = 'block';
+        resultBox.textContent = '';
+
+        fetch('/predict', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            loadingContainer.style.display = 'none';
+            if (data.error) {
+                resultBox.textContent = "Error: " + data.error;
+            } else {
+                resultBox.innerHTML = `
+                    <h3>Diagnosis Result</h3>
+                    <p><strong>Prediction:</strong> ${data.class}</p>
+                    <p><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%</p>
+                    <div class="button-row" id="mapButtonRow">
+                        <button type="button" id="showSaliencyBtn" class="small-button">Show Saliency Map</button>
+                        <button type="button" id="showGradcamBtn" class="small-button">Show Grad-CAM</button>
+                    </div>
+                `;
+                document.getElementById('mapButtonRow').style.display = 'flex';
+                setupMapButtons(fileInput.files[0]);
+            }
+        })
+        .catch(err => {
+            loadingContainer.style.display = 'none';
+            console.error(err);
+            resultBox.textContent = "An error occurred: " + err.message;
+        });
+    });
+
+    function setupMapButtons(file) {
+        const saliencyPreview = document.getElementById('saliencyPreview');
+        const gradcamPreview = document.getElementById('gradcamPreview');
+
+        document.getElementById('showSaliencyBtn').addEventListener('click', () => {
+            const saliencyForm = new FormData();
+            saliencyForm.append('file', file);
+            fetch('/saliency_image', { method: 'POST', body: saliencyForm })
+                .then(res => res.blob())
+                .then(blob => {
+                    saliencyPreview.src = URL.createObjectURL(blob);
+                    saliencyPreview.style.display = 'block';
+                });
+        });
+
+        document.getElementById('showGradcamBtn').addEventListener('click', () => {
+            const gradcamForm = new FormData();
+            gradcamForm.append('file', file);
+            fetch('/gradcam_image', { method: 'POST', body: gradcamForm })
+                .then(res => res.blob())
+                .then(blob => {
+                    gradcamPreview.src = URL.createObjectURL(blob);
+                    gradcamPreview.style.display = 'block';
+                });
+        });
+    }
+
     document.getElementById('fileInput').addEventListener('change', function(e) {
         const preview = document.getElementById('preview');
         const previewContainer = document.getElementById('imagePreview');
