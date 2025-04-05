@@ -2,7 +2,7 @@
 timeout = 300
 
 # Use only one worker to minimize memory use
-workers = 1
+workers = 4
 
 # Avoid threading conflicts or memory spikes
 threads = 1
