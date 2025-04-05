@@ -1,5 +1,5 @@
 # Increases default timeout to give your model time to process
-timeout = 120
+timeout = 300
 
 # Use only one worker to minimize memory use
 workers = 1
