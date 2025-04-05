@@ -8,7 +8,7 @@ workers = 1
 threads = 1
 
 # Prevent model from loading during startup to conserve memory
-preload_app = False
+preload_app = True
 
 # Bind to the correct port for Render
 bind = "0.0.0.0:10000"
