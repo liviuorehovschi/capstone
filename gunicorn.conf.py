@@ -1,17 +1,13 @@
-# Increases default timeout to give your model time to process
+# Safer for ML workloads
+workers = 1
+threads = 1
+worker_class = "sync"
+
+# Increase timeout to support model inference
 timeout = 600
 
-# Use only one worker to minimize memory use
-workers = 1
-
-# Avoid threading conflicts or memory spikes
-threads = 1
-
-# Prevent model from loading during startup to conserve memory
-preload_app = True
-
-# Bind to the correct port for Render
+# Bind to correct port
 bind = "0.0.0.0:10000"
 
-# Use sync workers which are safer for small apps with ML
-worker_class = "sync"
+# Avoid loading model before forking — this is safer for TF/Keras
+preload_app = False
