@@ -8,12 +8,44 @@ from PIL import Image
 from tensorflow.keras.preprocessing.image import img_to_array
 
 app = Flask(__name__)
+app.debug = True  # TEMP for tracing crashes
 
 MODEL_PATH = 'model/best_model_efficientnet.keras'
 CLASS_NAMES = ['lung_aca', 'lung_n', 'lung_scc']
 
 def load_model():
-    return tf.keras.models.load_model(MODEL_PATH)
+    print(f"[INFO] Attempting to load model from {MODEL_PATH}")
+    try:
+        model = tf.keras.models.load_model(MODEL_PATH)
+        print("[SUCCESS] Model loaded.")
+        return model
+    except Exception as e:
+        print(f"[FATAL ERROR] Failed to load model: {e}")
+        raise
+
+@app.route('/debug_files')
+def debug_files():
+    # Lists model-related files in the project directory
+    model_files = []
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            if file.endswith('.keras') or file.endswith('.h5'):
+                model_files.append(os.path.join(root, file))
+    print(f"[DEBUG] Found model files: {model_files}")
+    return jsonify(model_files)
+
+@app.route('/test_model')
+def test_model():
+    try:
+        _ = load_model()
+        return "Model loaded successfully!"
+    except Exception as e:
+        return f"Model failed to load: {e}", 500
+
+@app.errorhandler(500)
+def handle_internal_error(e):
+    print(f"[ERROR 500] {e}")
+    return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/')
 def home():
