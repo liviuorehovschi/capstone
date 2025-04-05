@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 
 app = Flask(__name__)
 
-# Load model
+# Load model once at startup
 MODEL_PATH = 'model/best_model_efficientnet.keras'
 model = tf.keras.models.load_model(MODEL_PATH)
 CLASS_NAMES = ['lung_aca', 'lung_n', 'lung_scc']
@@ -35,14 +35,14 @@ def research():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'})
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'})
-
     try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file uploaded'})
+
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'})
+
         img = Image.open(file.stream).convert("RGB").resize((224, 224))
         img_array = img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
@@ -57,8 +57,10 @@ def predict():
             'class': predicted_class,
             'confidence': confidence
         })
+    
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /predict] {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/gradcam_image', methods=['POST'])
 def gradcam_image():
@@ -99,7 +101,8 @@ def gradcam_image():
         return send_file(img_io, mimetype='image/png')
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /gradcam_image] {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/saliency_image', methods=['POST'])
 def saliency_image():
@@ -129,7 +132,8 @@ def saliency_image():
         return send_file(img_io, mimetype='image/png')
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /saliency_image] {e}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
