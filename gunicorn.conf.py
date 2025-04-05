@@ -1,8 +1,8 @@
 # Increases default timeout to give your model time to process
-timeout = 300
+timeout = 600
 
 # Use only one worker to minimize memory use
-workers = 4
+workers = 1
 
 # Avoid threading conflicts or memory spikes
 threads = 1
