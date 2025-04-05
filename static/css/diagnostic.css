@@ -196,7 +196,8 @@
     font-size: 0.9rem;
 }
 
-.help-icon:hover + .tooltip-text {
+/* ✅ FIXED: tooltip now appears when hovering the parent container */
+.tooltip:hover .tooltip-text {
     display: block;
 }
 
@@ -260,6 +261,7 @@
     background: var(--darker-gray);
     transform: translateY(-2px);
 }
+
 /* Surround all three previews */
 .preview-wrapper {
     max-width: 800px;
@@ -269,23 +271,4 @@
     border-radius: 8px;
     border: 1px solid var(--glass-border);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Align three images in a row */
-.preview-trio {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-}
-
-/* All previews uniform */
-.side-preview,
-.center-preview {
-    width: 224px;
-    height: 224px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid var(--glass-border);
-    background-color: var(--dark-gray);
 }
