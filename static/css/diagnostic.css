@@ -272,3 +272,35 @@
     border: 1px solid var(--glass-border);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+.upload-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-gray);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    z-index: 10;
+    margin-top: 6px;
+    min-width: 250px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.upload-options .option {
+    padding: 0.75rem 1rem;
+    color: var(--light-gray);
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--medium-gray);
+    transition: background 0.2s;
+}
+
+.upload-options .option:last-child {
+    border-bottom: none;
+}
+
+.upload-options .option:hover {
+    background: var(--darker-gray);
+}
