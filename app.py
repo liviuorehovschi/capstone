@@ -3,15 +3,49 @@ import numpy as np
 import tensorflow as tf
 import cv2
 import io
+import os
 from PIL import Image
 from tensorflow.keras.preprocessing.image import img_to_array
 
 app = Flask(__name__)
+app.debug = True  # TEMP for tracing crashes
 
-# Load model
 MODEL_PATH = 'model/best_model_efficientnet.keras'
-model = tf.keras.models.load_model(MODEL_PATH)
 CLASS_NAMES = ['lung_aca', 'lung_n', 'lung_scc']
+
+def load_model():
+    print(f"[INFO] Attempting to load model from {MODEL_PATH}")
+    try:
+        model = tf.keras.models.load_model(MODEL_PATH)
+        print("[SUCCESS] Model loaded.")
+        return model
+    except Exception as e:
+        print(f"[FATAL ERROR] Failed to load model: {e}")
+        raise
+
+@app.route('/debug_files')
+def debug_files():
+    # Lists model-related files in the project directory
+    model_files = []
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            if file.endswith('.keras') or file.endswith('.h5'):
+                model_files.append(os.path.join(root, file))
+    print(f"[DEBUG] Found model files: {model_files}")
+    return jsonify(model_files)
+
+@app.route('/test_model')
+def test_model():
+    try:
+        _ = load_model()
+        return "Model loaded successfully!"
+    except Exception as e:
+        return f"Model failed to load: {e}", 500
+
+@app.errorhandler(500)
+def handle_internal_error(e):
+    print(f"[ERROR 500] {e}")
+    return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/')
 def home():
@@ -35,30 +69,27 @@ def research():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'})
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'})
-
     try:
+        if 'file' not in request.files or request.files['file'].filename == '':
+            return jsonify({'error': 'No file uploaded'})
+
+        file = request.files['file']
         img = Image.open(file.stream).convert("RGB").resize((224, 224))
         img_array = img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = tf.keras.applications.efficientnet.preprocess_input(img_array)
 
+        model = load_model()
         predictions = model.predict(img_array)
         class_index = np.argmax(predictions[0])
         predicted_class = CLASS_NAMES[class_index]
         confidence = float(predictions[0][class_index])
 
-        return jsonify({
-            'class': predicted_class,
-            'confidence': confidence
-        })
+        return jsonify({'class': predicted_class, 'confidence': confidence})
+
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /predict] {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/gradcam_image', methods=['POST'])
 def gradcam_image():
@@ -70,6 +101,7 @@ def gradcam_image():
 
         img_array = tf.keras.applications.efficientnet.preprocess_input(np.expand_dims(resized.astype(np.float32), axis=0))
 
+        model = load_model()
         preds = model.predict(img_array)
         class_idx = np.argmax(preds[0])
 
@@ -99,7 +131,8 @@ def gradcam_image():
         return send_file(img_io, mimetype='image/png')
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /gradcam_image] {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/saliency_image', methods=['POST'])
 def saliency_image():
@@ -110,6 +143,7 @@ def saliency_image():
         img_array = np.expand_dims(img_array, axis=0)
         img_array = tf.keras.applications.efficientnet.preprocess_input(img_array)
 
+        model = load_model()
         image_tensor = tf.Variable(img_array, dtype=tf.float32)
         with tf.GradientTape() as tape:
             tape.watch(image_tensor)
@@ -129,7 +163,9 @@ def saliency_image():
         return send_file(img_io, mimetype='image/png')
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(f"[ERROR in /saliency_image] {e}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
