@@ -289,3 +289,37 @@
     border: 1px solid var(--glass-border);
     background-color: var(--dark-gray);
 }
+
+.sample-images {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sample-images h2 {
+    font-size: 1.2rem;
+    color: var(--light-gray);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.sample-gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.sample {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sample:hover {
+    transform: scale(1.05);
+    border-color: var(--accent-gray);
+}
+
