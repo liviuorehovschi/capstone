@@ -25,7 +25,6 @@
             </div>
         </div>
 
-        <!-- Image preview area -->
         <div id="imagePreview" class="preview-wrapper" style="display: none;">
             <div class="preview-trio">
                 <img id="saliencyPreview" class="side-preview" alt="Saliency Map" style="display: none;">
@@ -37,17 +36,14 @@
         <button type="submit" class="button">Analyze</button>
     </form>
 
-    <!-- Loading animation -->
     <div id="loadingContainer" class="loading-container">
         <h3>Analyzing tissue sample...</h3>
         <div class="scanner"></div>
         <p>Processing image using advanced AI analysis</p>
     </div>
 
-    <!-- Diagnosis result -->
     <div id="result" class="result-box" style="display: none;"></div>
 
-    <!-- Grad-CAM and Saliency buttons -->
     <div class="button-row" id="mapButtonRow" style="display: none;">
         <button type="button" id="showSaliencyBtn" class="small-button">Show Saliency Map</button>
         <button type="button" id="showGradcamBtn" class="small-button">Show Grad-CAM</button>
@@ -58,14 +54,12 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/diagnostic.js') }}"></script>
 <script>
-    // Toggle dropdown visibility
     document.getElementById('fileInputLabel').addEventListener('click', function (e) {
         e.preventDefault();
         const options = document.getElementById('uploadOptions');
         options.style.display = options.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Hide dropdown if clicking outside
     document.addEventListener('click', function (e) {
         const options = document.getElementById('uploadOptions');
         const label = document.getElementById('fileInputLabel');
@@ -74,7 +68,6 @@
         }
     });
 
-    // Handle sample selection
     function useSample(filename) {
         const imagePath = `/static/test_images/${filename}`;
         fetch(imagePath)
