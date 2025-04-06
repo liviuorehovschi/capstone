@@ -10,14 +10,23 @@
 <div class="diagnostic-container">
     <h1>Lung Tissue Analysis Tool</h1>
     <p>Upload a histopathological image of lung tissue to detect if it is normal or shows signs of cancer.</p>
-    
+
+    <!-- Sample Image Gallery -->
+    <div class="sample-images">
+        <h2>Try with Sample Images</h2>
+        <div class="sample-gallery">
+            <img src="{{ url_for('static', filename='test_images/adenocarcinoma.jpg') }}" class="sample" alt="Adenocarcinoma" onclick="useSample(this)">
+            <img src="{{ url_for('static', filename='test_images/benign tissue.png') }}" class="sample" alt="Benign Tissue" onclick="useSample(this)">
+            <img src="{{ url_for('static', filename='test_images/squamous cell carcinoma.png') }}" class="sample" alt="Squamous Cell Carcinoma" onclick="useSample(this)">
+        </div>
+    </div>
+
     <form id="uploadForm" enctype="multipart/form-data">
         <div class="upload-box">
             <input type="file" name="file" accept="image/*" id="fileInput" required>
             <label for="fileInput">Select histopathological image</label>
         </div>
 
-        <!-- Wrapped all previews inside one shared box -->
         <div id="imagePreview" class="preview-wrapper" style="display: none;">
             <div class="preview-trio">
                 <img id="saliencyPreview" class="side-preview" alt="Saliency Map" style="display: none;">
@@ -32,42 +41,45 @@
 
         <button type="submit" class="button">Analyze</button>
     </form>
-    
+
     <div id="loadingContainer" class="loading-container">
         <h3>Analyzing tissue sample...</h3>
         <div class="scanner"></div>
         <p>Processing image using advanced AI analysis</p>
     </div>
-    
-    <div id="result"></div>
+
+    <div id="result" class="result-box" style="display: none;"></div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/diagnostic.js') }}"></script>
 <script>
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-        const preview = document.getElementById('preview');
-        const previewContainer = document.getElementById('imagePreview');
-        const saliencyPreview = document.getElementById('saliencyPreview');
-        const gradcamPreview = document.getElementById('gradcamPreview');
-        const mapButtonRow = document.getElementById('mapButtonRow');
-        
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                previewContainer.style.display = 'block';
+    // Handle sample image clicks
+    function useSample(imgElement) {
+        fetch(imgElement.src)
+            .then(res => res.blob())
+            .then(blob => {
+                const file = new File([blob], "sample.jpg", { type: blob.type });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                const input = document.getElementById("fileInput");
+                input.files = dataTransfer.files;
 
-                // Hide overlays and buttons
-                saliencyPreview.style.display = 'none';
-                saliencyPreview.src = '';
-                gradcamPreview.style.display = 'none';
-                gradcamPreview.src = '';
-                mapButtonRow.style.display = 'none';
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    });
+                // Trigger preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("preview").src = e.target.result;
+                    document.getElementById("imagePreview").style.display = "block";
+
+                    document.getElementById("saliencyPreview").style.display = "none";
+                    document.getElementById("saliencyPreview").src = '';
+                    document.getElementById("gradcamPreview").style.display = "none";
+                    document.getElementById("gradcamPreview").src = '';
+                    document.getElementById("mapButtonRow").style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            });
+    }
 </script>
 {% endblock %}
